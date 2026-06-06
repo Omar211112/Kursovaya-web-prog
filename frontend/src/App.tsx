@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import {
   LayoutDashboard, PawPrint, Sprout, Calendar, Wallet,
-  Activity, Map as MapIcon, ClipboardList, Calculator, Trash2
+  Activity, Map as MapIcon, ClipboardList, Calculator, Trash2, ListChecks
 } from 'lucide-react';
+import AnimalRegistry from './components/AnimalRegistry';
 
 const API_BASE = "http://localhost:8000";
 const YANDEX_MAPS_API_KEY = "1d49a90d-c361-479c-8d52-3bc659fa6d0b";
@@ -468,6 +469,7 @@ function App() {
         <nav className="p-4 space-y-2">
           <NavItem icon={<LayoutDashboard size={20}/>} label="Панель управления" active={activeTab === 'dashboard'} onClick={() => setActiveTab('dashboard')} />
           <NavItem icon={<PawPrint size={20}/>} label="Учет поголовья" active={activeTab === 'animals'} onClick={() => setActiveTab('animals')} />
+          <NavItem icon={<ListChecks size={20}/>} label="Реестр животных" active={activeTab === 'registry'} onClick={() => setActiveTab('registry')} />
           <NavItem icon={<Sprout size={20}/>} label="Учет посевов" active={activeTab === 'crops'} onClick={() => setActiveTab('crops')} />
           <NavItem icon={<ClipboardList size={20}/>} label="Ветеринарный учет" active={activeTab === 'vet'} onClick={() => setActiveTab('vet')} />
           <NavItem icon={<Calendar size={20}/>} label="Планирование работ" active={activeTab === 'tasks'} onClick={() => setActiveTab('tasks')} />
@@ -477,6 +479,7 @@ function App() {
       </div>
       <div className="flex-1">
         {activeTab === 'dashboard' && renderDashboard()}
+        {activeTab === 'registry' && <AnimalRegistry />}
         {activeTab === 'animals' && renderModule('Учет поголовья', animals, ['Кличка', 'Вид', 'Порода', 'Дата рождения', 'Статус'], <PawPrint/>, 'animals')}
         {activeTab === 'crops' && renderModule('Учет посевов', crops, ['Название', 'Площадь (га)', 'Дата посадки', 'Дата сбора', 'Статус'], <Sprout/>, 'crops')}
         {activeTab === 'vet' && renderModule('Ветеринарный учет', vet, ['ID животного', 'Дата', 'Описание', 'Лечение', 'Стоимость'], <ClipboardList/>, 'vet')}
